@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dashboard — Tourism & Police Coordination Dashboard</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/js/all.min.js" defer></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+
+  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    :root{
+      --primary:#3652E1;
+      --muted:#6C757D;
+      --bg:#F5F8FA;
+      --card-bg:#ffffff;
+      --text:#0D253C;
+      --accent-green:#1ABC9C;
+    }
+
+    .dashboard-header { padding: 18px 0 6px 0; }
+    .dashboard-hero {
+      display:flex;
+      gap:32px;
+      align-items:center;
+      background: radial-gradient(circle at 100% 0%, rgba(230,247,245,0.9), rgba(224,242,254,0.9));
+      border-radius:14px;
+      padding:34px;
+      margin: 10px 0 26px 0;
+    }
+    .hero-left { flex:1; min-width:320px; }
+    .brand { display:flex; align-items:center; gap:14px; margin-bottom:10px; }
+    .brand .brand-name { font-weight:800; color:var(--primary); font-size:20px; letter-spacing:0.6px; display:inline-block; }
+    .brand .brand-sub { color:var(--muted); font-weight:500; font-size:13px; }
+
+    .hero-title { margin:0; font-size:38px; line-height:1.05; color:var(--text); font-weight:800; }
+    .hero-accent { display:block; color:var(--accent-green); font-size:52px; margin-top:6px; font-weight:800; }
+
+    .hero-desc { color:#5A6A7B; margin:18px 0 22px 0; max-width:640px; font-size:15px; }
+
+    .hero-actions { display:flex; gap:12px; flex-wrap:wrap; }
+    .btn { border-radius:12px; padding:12px 18px; font-weight:700; font-size:15px; cursor:pointer; display:inline-flex; align-items:center; gap:10px; border:0; }
+    .btn-primary { background:var(--primary); color:#fff; box-shadow:0 8px 20px rgba(54,82,225,0.12); }
+    .btn-ghost { background:#fff; color:var(--primary); border:1px solid #E6EEF4; }
+
+    .hero-visual { width:400px; height:400px; flex-shrink:0; position:relative; display:flex; align-items:center; justify-content:center; }
+    .hero-circle {
+      width:100%; height:100%; border-radius:50%; background-image: url('https://i.imgur.com/uRkUa1x.png');
+      background-position:center; background-repeat:no-repeat; background-size:contain;
+      box-shadow: 0 14px 40px rgba(12,20,30,0.06);
+    }
+
+    .stats-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:20px; margin-top:8px; }
+    .stat-card {
+      background:var(--card-bg); border-radius:14px; padding:20px; box-shadow: 0 8px 24px rgba(2,6,23,0.06); min-height:130px;
+      display:flex; flex-direction:column; justify-content:space-between;
+    }
+    .stat-top { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px; }
+    .stat-icon { width:56px; height:56px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:20px; }
+    .stat-card .stat-value { font-size:32px; font-weight:800; color:var(--text); }
+    .stat-title { font-size:15px; color:#495057; font-weight:600; margin-top:6px; }
+    .stat-sub { font-size:13px; color:#6C757D; margin-top:4px; }
+
+    .stat-critical .stat-icon { background:#FEE2E2; color:#EF4444; }
+    .stat-density .stat-icon { background:#D6F5F3; color:#1ABC9C; }
+    .stat-teams .stat-icon { background:#D1FAE5; color:#10B981; }
+    .stat-priority .stat-icon { background:#FFEEDA; color:#F59E0B; }
+
+    .stat-badge { padding:6px 10px; border-radius:9999px; font-weight:700; font-size:12px; display:inline-flex; align-items:center; gap:8px; }
+    .stat-badge--muted { background:#E9F7F0; color:#198754; }
+    .stat-badge--positive { background:#E9F7F0; color:#198754; }
+    .stat-badge--info { background:#E7EDFF; color:var(--primary); }
+    .stat-badge--warn { background:#FFF8E1; color:#F59E0B; display:flex; align-items:center; gap:8px; }
+
+    .stat-badge .dot { width:8px; height:8px; border-radius:50%; background:#F59E0B; display:inline-block; }
+
+    @media (max-width: 980px) {
+      .dashboard-hero { flex-direction:column; align-items:flex-start; padding:22px; }
+      .hero-visual { width:280px; height:280px; align-self:center; }
+      .hero-accent { font-size:36px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">TPCD</div>
+        <div class="sidebar-title"><h1>T.R.A.I.L.</h1></div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <ul>
+          <li><a href="index.html" data-page="index.html" class="active"><i class="fa-solid fa-clock-rotate-left"></i> <span class="nav-text">Dashboard</span></a></li>
+          <li><a href="heatmaps.html" data-page="heatmaps.html"><i class="fa-solid fa-chart-area"></i> <span class="nav-text">Heatmaps & Clustering</span></a></li>
+          <li><a href="timeline.html" data-page="timeline.html"><i class="fa-solid fa-code-fork"></i> <span class="nav-text">Incident Timeline</span></a></li>
+          <li><a href="ai-alerts.html" data-page="ai-alerts.html"><i class="fa-solid fa-robot"></i> <span class="nav-text">AI Alert System</span></a></li>
+          <li><a href="cross-agency.html" data-page="cross-agency.html"><i class="fa-solid fa-share-nodes"></i> <span class="nav-text">Cross-Agency Hub</span></a></li>
+          <li><a href="case-management.html" data-page="case-management.html"><i class="fa-solid fa-folder"></i> <span class="nav-text">Case Management</span></a></li>
+          <li><a href="resource-allocation.html" data-page="resource-allocation.html"><i class="fa-solid fa-users"></i> <span class="nav-text">Resource Allocation</span></a></li>
+          <li><a href="emergency-drills.html" data-page="emergency-drills.html"><i class="fa-solid fa-graduation-cap"></i> <span class="nav-text">Emergency Drills</span></a></li>
+          <li><a href="analytics.html" data-page="analytics.html"><i class="fa-solid fa-chart-line"></i> <span class="nav-text">Analytics</span></a></li>
+          <li><a href="settings.html" data-page="settings.html"><i class="fa-solid fa-cog"></i> <span class="nav-text">Settings</span></a></li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-footer">Signed in as <strong>Officer Ankit</strong></div>
+    </aside>
+
+    <div class="main-column">
+      <header class="main-header">
+        <div class="main-header-left">
+          <button class="hamburger" id="hamburger"><i class="fa-solid fa-bars"></i></button>
+          <div class="search-bar">
+            <i class="fa-solid fa-search"></i>
+            <input type="text" placeholder="Search incidents, locations..." />
+          </div>
+        </div>
+        <div class="header-actions">
+          <div class="notification-bell">
+            <i class="fa-regular fa-bell"></i>
+            <div class="notification-badge">3</div>
+          </div>
+          <div class="user-profile">
+            <img src="https://randomuser.me/api/portraits/men/44.jpg" alt="Officer Ankit" />
+            <span>Officer Ankit</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+        </div>
+      </header>
+
+      <main id="mainContent">
+        <section class="dashboard-header">
+          <h1>Tourism & Police Coordination Dashboard</h1>
+          <p>Real-time monitoring and coordination for tourist safety and emergency response</p>
+        </section>
+
+        <section class="dashboard-hero" role="region" aria-label="Dashboard hero">
+          <div class="hero-left">
+            <div class="brand">
+              <span class="brand-name">T.R.A.I.L.</span>
+              <span class="brand-sub">Tourism & Police Coordination</span>
+            </div>
+
+            <h2 class="hero-title">Tourism &amp; Police Coordination
+              <span class="hero-accent">Dashboard</span>
+            </h2>
+
+            <p class="hero-desc">
+              Real-time monitoring for tourist safety &amp; smooth travel experiences. Ensuring every visitor feels secure and welcome in our destination.
+            </p>
+
+            <div class="hero-actions">
+              <button class="btn btn-primary" id="btn-live-analytics"><i class="fa-solid fa-chart-simple"></i> View Live Analytics</button>
+              <button class="btn btn-ghost" id="btn-command-center"><i class="fa-solid fa-book-open"></i> Open Command Center</button>
+            </div>
+          </div>
+
+          <div class="hero-visual" aria-hidden="true">
+            <div class="hero-circle"></div>
+          </div>
+        </section>
+
+        <section class="stats-grid" aria-label="Key statistics">
+          <article class="stat-card stat-critical" data-key="activeIncidents">
+            <div class="stat-top">
+              <div class="stat-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+              <div class="stat-badge stat-badge--muted"><i class="fa-solid fa-arrow-down"></i> 12%</div>
+            </div>
+            <div class="stat-main">
+              <div class="stat-value" data-value>23</div>
+              <div class="stat-title">Active Incidents</div>
+              <div class="stat-sub">vs. yesterday</div>
+            </div>
+          </article>
+
+          <article class="stat-card stat-density" data-key="touristDensity">
+            <div class="stat-top">
+              <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
+              <div class="stat-badge stat-badge--positive"><i class="fa-solid fa-arrow-up"></i> 28%</div>
+            </div>
+            <div class="stat-main">
+              <div class="stat-value" data-value>8.7K</div>
+              <div class="stat-title">Tourist Density</div>
+              <div class="stat-sub">visitors / km²</div>
+            </div>
+          </article>
+
+          <article class="stat-card stat-teams" data-key="responseTeams">
+            <div class="stat-top">
+              <div class="stat-icon"><i class="fa-solid fa-shield-halved"></i></div>
+              <div class="stat-badge stat-badge--info"><i class="fa-solid fa-check"></i> Active</div>
+            </div>
+            <div class="stat-main">
+              <div class="stat-value" data-value>47</div>
+              <div class="stat-title">Response Teams</div>
+              <div class="stat-sub">on duty now</div>
+            </div>
+          </article>
+
+          <article class="stat-card stat-priority" data-key="alertPriority">
+            <div class="stat-top">
+              <div class="stat-icon"><i class="fa-solid fa-bell"></i></div>
+              <div class="stat-badge stat-badge--warn"><span class="dot"></span> Medium</div>
+            </div>
+            <div class="stat-main">
+              <div class="stat-value" data-value>High</div>
+              <div class="stat-title">Alert Priority</div>
+              <div class="stat-sub">current level</div>
+            </div>
+          </article>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const sidebar = document.getElementById('sidebar');
+      const hamburger = document.getElementById('hamburger');
+
+      function isSmall() { return window.innerWidth <= 900; }
+
+      hamburger.addEventListener('click', () => {
+        if (isSmall()) sidebar.classList.toggle('expanded');
+        else sidebar.classList.toggle('collapsed');
+      });
+
+      const current = location.pathname.split('/').pop() || 'index.html';
+      document.querySelectorAll('.sidebar-nav a').forEach(a => {
+        if (a.dataset.page === current) a.classList.add('active');
+        else a.classList.remove('active');
+      });
+
+      function animateNumber(el, from, to, duration=900) {
+        if (!el) return;
+        const start = performance.now();
+        const isNumber = typeof from === 'number' && typeof to === 'number';
+        requestAnimationFrame(function step(now){
+          const t = Math.min(1, (now - start) / duration);
+          const eased = 1 - Math.pow(1 - t, 3);
+          const val = isNumber ? Math.round(from + (to - from) * eased) : to;
+          el.textContent = (isNumber ? val : to);
+          if (t < 1) requestAnimationFrame(step);
+        });
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const numericCards = [
+          { selector: '.stat-critical [data-value]', to: 23 },
+          { selector: '.stat-density [data-value]', to: 8700, format: (v)=> (v>=1000? (v/1000).toFixed(1)+'K':v) },
+          { selector: '.stat-teams [data-value]', to: 47 }
+        ];
+        numericCards.forEach(item => {
+          const el = document.querySelector(item.selector);
+          if (!el) return;
+          if (item.format) {
+            animateNumber(el, 0, item.to, 900);
+            setTimeout(()=> { el.textContent = item.format(item.to); }, 920);
+          } else {
+            animateNumber(el, 0, item.to, 900);
+          }
+        });
+
+        document.getElementById('btn-live-analytics')?.addEventListener('click', () => {
+          window.location.href = 'analytics.html';
+        });
+        document.getElementById('btn-command-center')?.addEventListener('click', () => {
+          alert('Opening Command Center…');
+        });
+      });
+
+    })();
+  </script>
+</body>
+</html>

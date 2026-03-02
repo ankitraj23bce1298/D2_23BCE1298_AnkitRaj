@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Analytics — Tourism & Police Coordination Dashboard</title>
+
+  <!-- Icons & Fonts -->
+  <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/js/all.min.js" defer></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+
+  <!-- Your stylesheet -->
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    /* small local styles to ensure canvas sizing */
+    .chart-card { background:var(--bg-card); padding:16px; border-radius:12px; }
+    canvas { width:100% !important; height:300px !important; display:block; }
+    .small-chart { height:160px !important; }
+  </style>
+</head>
+<body>
+  <div class="dashboard-shell">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+      <div class="sidebar-header">
+        <div class="sidebar-logo" aria-hidden="true">TPCD</div>
+        <div class="sidebar-title"><h1>T.R.A.I.L.</h1></div>
+      </div>
+
+      <nav class="sidebar-nav" aria-label="Primary">
+        <ul>
+          <li><a href="index.html" data-page="index.html"><i class="fa-solid fa-clock-rotate-left"></i> <span class="nav-text">Dashboard</span></a></li>
+          <li><a href="heatmaps.html" data-page="heatmaps.html"><i class="fa-solid fa-chart-area"></i> <span class="nav-text">Heatmaps & Clustering</span></a></li>
+          <li><a href="timeline.html" data-page="timeline.html"><i class="fa-solid fa-code-fork"></i> <span class="nav-text">Incident Timeline</span></a></li>
+          <li><a href="ai-alerts.html" data-page="ai-alerts.html"><i class="fa-solid fa-robot"></i> <span class="nav-text">AI Alert System</span></a></li>
+          <li><a href="cross-agency.html" data-page="cross-agency.html"><i class="fa-solid fa-share-nodes"></i> <span class="nav-text">Cross-Agency Hub</span></a></li>
+          <li><a href="case-management.html" data-page="case-management.html"><i class="fa-solid fa-folder"></i> <span class="nav-text">Case Management</span></a></li>
+          <li><a href="resource-allocation.html" data-page="resource-allocation.html"><i class="fa-solid fa-users"></i> <span class="nav-text">Resource Allocation</span></a></li>
+          <li><a href="emergency-drills.html" data-page="emergency-drills.html"><i class="fa-solid fa-graduation-cap"></i> <span class="nav-text">Emergency Drills</span></a></li>
+          <li><a href="analytics.html" data-page="analytics.html" class="active"><i class="fa-solid fa-chart-line"></i> <span class="nav-text">Analytics</span></a></li>
+          <li><a href="settings.html" data-page="settings.html"><i class="fa-solid fa-cog"></i> <span class="nav-text">Settings</span></a></li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-footer">Signed in as <strong>Officer Ankit</strong></div>
+    </aside>
+
+    <!-- Main column -->
+    <div class="main-column">
+      <header class="main-header">
+        <div class="main-header-left">
+          <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+
+          <div class="search-bar" role="search" aria-label="Search incidents">
+            <i class="fa-solid fa-search" aria-hidden="true"></i>
+            <input type="text" placeholder="Search incidents, locations..." />
+          </div>
+        </div>
+
+        <div class="header-actions">
+          <div class="notification-bell" title="Notifications" aria-live="polite">
+            <i class="fa-regular fa-bell"></i>
+            <div class="notification-badge">3</div>
+          </div>
+
+          <div class="user-profile" role="button" tabindex="0" title="Account">
+            <img src="https://randomuser.me/api/portraits/men/44.jpg" alt="Officer Ankit profile" />
+            <span>Officer Ankit</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+        </div>
+      </header>
+
+      <main id="mainContent" tabindex="0">
+        <!-- Analytics Content -->
+        <section class="dashboard-header">
+          <h1>Analytics</h1>
+          <p>KPIs, incident trends and response performance at a glance.</p>
+        </section>
+
+        <!-- KPI cards -->
+        <section style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; margin-bottom:18px;">
+          <div class="stat-card" style="padding:16px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <div>
+                <div style="font-size:12px;color:var(--text-secondary);">Incidents (30d)</div>
+                <div style="font-size:20px;font-weight:700;">128</div>
+              </div>
+              <div style="font-size:20px;color:var(--text-secondary);"><i class="fa-solid fa-chart-line"></i></div>
+            </div>
+            <div style="margin-top:8px;"><span class="badge badge-green">+4% vs prev</span></div>
+          </div>
+
+          <div class="stat-card" style="padding:16px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <div>
+                <div style="font-size:12px;color:var(--text-secondary);">Avg Response Time</div>
+                <div style="font-size:20px;font-weight:700;">4.2 min</div>
+              </div>
+              <div style="font-size:20px;color:var(--text-secondary);"><i class="fa-solid fa-stopwatch"></i></div>
+            </div>
+            <div style="margin-top:8px;"><span class="badge badge-light-green">On target</span></div>
+          </div>
+
+          <div class="stat-card" style="padding:16px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <div>
+                <div style="font-size:12px;color:var(--text-secondary);">AI Accuracy</div>
+                <div style="font-size:20px;font-weight:700;">94.2%</div>
+              </div>
+              <div style="font-size:20px;color:var(--text-secondary);"><i class="fa-solid fa-robot"></i></div>
+            </div>
+            <div style="margin-top:8px;"><span class="badge badge-yellow">Stable</span></div>
+          </div>
+
+          <div class="stat-card" style="padding:16px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <div>
+                <div style="font-size:12px;color:var(--text-secondary);">Resource Utilization</div>
+                <div style="font-size:20px;font-weight:700;">76%</div>
+              </div>
+              <div style="font-size:20px;color:var(--text-secondary);"><i class="fa-solid fa-users"></i></div>
+            </div>
+            <div style="margin-top:8px;"><span class="badge badge-light-green">Improving</span></div>
+          </div>
+        </section>
+
+        <!-- Charts and trends -->
+        <section style="display:grid; grid-template-columns:2fr 1fr; gap:18px;">
+          <!-- Left: charts -->
+          <div class="chart-card">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <h3 style="margin:0;font-size:16px;">Incident Trends (30 days)</h3>
+              <div style="font-size:13px;color:var(--text-secondary);">Compare: Last 30 days</div>
+            </div>
+
+            <!-- Line chart -->
+            <div style="margin-top:12px;">
+              <canvas id="incidentsLineChart" aria-label="Incident trends line chart"></canvas>
+            </div>
+
+            <!-- Small cards below chart -->
+            <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:12px; margin-top:12px;">
+              <div style="background:#FBFDFF;padding:10px;border-radius:8px;">
+                <div style="font-weight:700;">24</div>
+                <div style="font-size:12px;color:var(--text-secondary);">Critical Alerts</div>
+              </div>
+              <div style="background:#FBFDFF;padding:10px;border-radius:8px;">
+                <div style="font-weight:700;">312</div>
+                <div style="font-size:12px;color:var(--text-secondary);">Total Reports</div>
+              </div>
+              <div style="background:#FBFDFF;padding:10px;border-radius:8px;">
+                <div style="font-weight:700;">1.2K</div>
+                <div style="font-size:12px;color:var(--text-secondary);">Unique Visitors</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: breakdowns -->
+          <aside style="display:flex;flex-direction:column;gap:12px;">
+            <div class="chart-card">
+              <h4 style="margin:0 0 8px;font-size:14px;">Top Incident Types</h4>
+              <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px;">
+                <li style="display:flex;justify-content:space-between;"><span>Missing Person</span><strong>38</strong></li>
+                <li style="display:flex;justify-content:space-between;"><span>Medical Emergency</span><strong>27</strong></li>
+                <li style="display:flex;justify-content:space-between;"><span>Overcrowding</span><strong>21</strong></li>
+                <li style="display:flex;justify-content:space-between;"><span>Safety Incident</span><strong>17</strong></li>
+              </ul>
+            </div>
+
+            <div class="chart-card">
+              <h4 style="margin:0 0 8px;font-size:14px;">Response Time Distribution</h4>
+              <div style="margin-top:8px;">
+                <canvas id="responseBarChart" class="small-chart" aria-label="Response time bar chart"></canvas>
+              </div>
+            </div>
+
+            <div class="chart-card">
+              <h4 style="margin:0 0 8px;font-size:14px;">Geographic Hotspots</h4>
+              <div style="height:120px; border:1px dashed var(--border-color); border-radius:8px; display:flex;align-items:center;justify-content:center;color:var(--text-secondary);">
+                <div><i class="fa-solid fa-map-location-dot" style="font-size:24px;"></i><div style="margin-top:8px;font-size:13px;">Mini-map placeholder (Leaflet)</div></div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <!-- Export & filters -->
+        <section style="display:flex;justify-content:space-between;align-items:center;margin-top:18px;">
+          <div style="display:flex;gap:8px;">
+            <select id="rangeSelect" style="padding:8px;border-radius:8px;border:1px solid var(--border-color);background:#FBFDFF;">
+              <option value="30">Last 30 days</option>
+              <option value="14">Last 14 days</option>
+              <option value="7">Last 7 days</option>
+            </select>
+            <button class="control-button" id="applyRange">Apply</button>
+          </div>
+
+          <div style="display:flex;gap:8px;">
+            <button class="control-button"><i class="fa-solid fa-file-arrow-down"></i> Export CSV</button>
+            <button class="control-button"><i class="fa-solid fa-file-lines"></i> Generate Report</button>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Shared JS: active nav + hamburger + Chart rendering -->
+  <script>
+    (function () {
+      const sidebar = document.getElementById('sidebar');
+      const hamburger = document.getElementById('hamburger');
+
+      function isSmall() { return window.innerWidth <= 900; }
+
+      // Hamburger toggle
+      hamburger.addEventListener('click', () => {
+        if (isSmall()) sidebar.classList.toggle('expanded');
+        else sidebar.classList.toggle('collapsed');
+      });
+
+      // Close sidebar when clicking outside on small screens
+      document.addEventListener('click', (e) => {
+        if (!isSmall()) return;
+        const target = e.target;
+        if (!sidebar.contains(target) && sidebar.classList.contains('expanded')) {
+          sidebar.classList.remove('expanded');
+        }
+      });
+
+      // Accessibility: close with Escape
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && sidebar.classList.contains('expanded')) {
+          sidebar.classList.remove('expanded');
+        }
+      });
+
+      // Focus main content when pressing Enter on hamburger
+      hamburger.addEventListener('keydown', (ev) => {
+        if (ev.key === 'Enter') {
+          document.getElementById('mainContent').focus();
+        }
+      });
+
+      // Mark active link based on filename
+      const current = location.pathname.split('/').pop() || 'analytics.html';
+      document.querySelectorAll('.sidebar-nav a').forEach(a => {
+        if (a.dataset.page === current) {
+          a.classList.add('active');
+          a.setAttribute('aria-current', 'page');
+        } else {
+          a.classList.remove('active');
+          a.removeAttribute('aria-current');
+        }
+      });
+
+      // Responsive cleanup on resize
+      let resizeTimer;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+          if (!isSmall()) sidebar.classList.remove('expanded');
+        }, 120);
+      });
+
+      /* -----------------------
+         CHART.JS: sample charts
+         ----------------------- */
+
+      // Helper to generate last N days labels
+      function lastNDaysLabels(n) {
+        const labels = [];
+        for (let i = n - 1; i >= 0; i--) {
+          const d = new Date();
+          d.setDate(d.getDate() - i);
+          labels.push(d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' }));
+        }
+        return labels;
+      }
+
+      // Sample dataset generator (simulated incident counts)
+      function sampleIncidents(n) {
+        const data = [];
+        for (let i = 0; i < n; i++) {
+          // baseline + random spike
+          const base = 3 + Math.round(Math.sin(i / 3) * 2) + Math.round(Math.random() * 2);
+          data.push(Math.max(0, base));
+        }
+        return data;
+      }
+
+      // Initial chart setup
+      const incidentsCtx = document.getElementById('incidentsLineChart').getContext('2d');
+      const responseCtx = document.getElementById('responseBarChart').getContext('2d');
+
+      // Create charts with initial 30-day data
+      let currentRange = 30;
+      let incidentsLabels = lastNDaysLabels(currentRange);
+      let incidentsData = sampleIncidents(currentRange);
+
+      const incidentsLineChart = new Chart(incidentsCtx, {
+        type: 'line',
+        data: {
+          labels: incidentsLabels,
+          datasets: [{
+            label: 'Incidents',
+            data: incidentsData,
+            fill: true,
+            tension: 0.3,
+            backgroundColor: 'rgba(59,130,246,0.08)', // subtle fill
+            borderColor: 'rgba(59,130,246,1)',
+            pointRadius: 3,
+            pointHoverRadius: 6,
+            pointBackgroundColor: 'white',
+            pointBorderColor: 'rgba(59,130,246,1)'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: { mode: 'index', intersect: false }
+          },
+          interaction: { mode: 'index', intersect: false },
+          scales: {
+            x: {
+              grid: { display: false },
+              ticks: { maxRotation: 0, autoSkip: true, maxTicksLimit: 10 }
+            },
+            y: {
+              beginAtZero: true,
+              ticks: { precision: 0 }
+            }
+          }
+        }
+      });
+
+      // Response time distribution example (buckets)
+      const responseBuckets = ['0-2 min', '2-5 min', '5-10 min', '10-20 min', '>20 min'];
+      const responseValues = [32, 58, 18, 7, 3];
+
+      const responseBarChart = new Chart(responseCtx, {
+        type: 'bar',
+        data: {
+          labels: responseBuckets,
+          datasets: [{
+            label: 'Responses',
+            data: responseValues,
+            borderRadius: 6,
+            backgroundColor: [
+              '#10B981', '#3B82F6', '#F59E0B', '#F97316', '#EF4444'
+            ]
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: { callbacks: { label: ctx => `${ctx.raw} incidents` } }
+          },
+          scales: {
+            x: { grid: { display: false } },
+            y: { beginAtZero: true, ticks: { precision: 0 } }
+          }
+        }
+      });
+
+      // Re-render charts for selected range
+      document.getElementById('applyRange').addEventListener('click', () => {
+        const val = parseInt(document.getElementById('rangeSelect').value, 10) || 30;
+        currentRange = val;
+
+        // regenerate labels and random-ish data
+        const newLabels = lastNDaysLabels(currentRange);
+        const newData = sampleIncidents(currentRange);
+
+        incidentsLineChart.data.labels = newLabels;
+        incidentsLineChart.data.datasets[0].data = newData;
+        incidentsLineChart.update();
+      });
+
+    })();
+  </script>
+</body>
+</html>

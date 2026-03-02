@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Emergency Drills — Tourism & Police Coordination Dashboard</title>
+
+  <!-- Icons & Fonts -->
+  <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/js/all.min.js" defer></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+
+  <!-- Your stylesheet -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="dashboard-shell">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+      <div class="sidebar-header">
+        <div class="sidebar-logo" aria-hidden="true">TPCD</div>
+        <div class="sidebar-title"><h1>T.R.A.I.L.</h1></div>
+      </div>
+
+      <nav class="sidebar-nav" aria-label="Primary">
+        <ul>
+          <li><a href="index.html" data-page="index.html"><i class="fa-solid fa-clock-rotate-left"></i> <span class="nav-text">Dashboard</span></a></li>
+          <li><a href="heatmaps.html" data-page="heatmaps.html"><i class="fa-solid fa-chart-area"></i> <span class="nav-text">Heatmaps & Clustering</span></a></li>
+          <li><a href="timeline.html" data-page="timeline.html"><i class="fa-solid fa-code-fork"></i> <span class="nav-text">Incident Timeline</span></a></li>
+          <li><a href="ai-alerts.html" data-page="ai-alerts.html"><i class="fa-solid fa-robot"></i> <span class="nav-text">AI Alert System</span></a></li>
+          <li><a href="cross-agency.html" data-page="cross-agency.html"><i class="fa-solid fa-share-nodes"></i> <span class="nav-text">Cross-Agency Hub</span></a></li>
+          <li><a href="case-management.html" data-page="case-management.html"><i class="fa-solid fa-folder"></i> <span class="nav-text">Case Management</span></a></li>
+          <li><a href="resource-allocation.html" data-page="resource-allocation.html"><i class="fa-solid fa-users"></i> <span class="nav-text">Resource Allocation</span></a></li>
+          <li><a href="emergency-drills.html" data-page="emergency-drills.html" class="active"><i class="fa-solid fa-graduation-cap"></i> <span class="nav-text">Emergency Drills</span></a></li>
+          <li><a href="analytics.html" data-page="analytics.html"><i class="fa-solid fa-chart-line"></i> <span class="nav-text">Analytics</span></a></li>
+          <li><a href="settings.html" data-page="settings.html"><i class="fa-solid fa-cog"></i> <span class="nav-text">Settings</span></a></li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-footer">Signed in as <strong>Officer Ankit</strong></div>
+    </aside>
+
+    <!-- Main content -->
+    <div class="main-column">
+      <header class="main-header">
+        <div class="main-header-left">
+          <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+
+          <div class="search-bar" role="search" aria-label="Search incidents">
+            <i class="fa-solid fa-search" aria-hidden="true"></i>
+            <input type="text" placeholder="Search incidents, locations..." />
+          </div>
+        </div>
+
+        <div class="header-actions">
+          <div class="notification-bell" title="Notifications" aria-live="polite">
+            <i class="fa-regular fa-bell"></i>
+            <div class="notification-badge">3</div>
+          </div>
+
+          <div class="user-profile" role="button" tabindex="0" title="Account">
+            <img src="https://randomuser.me/api/portraits/men/44.jpg" alt="Officer Ankit profile" />
+            <span>Officer Ankit</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+        </div>
+      </header>
+
+      <main id="mainContent" tabindex="0">
+        <!-- Emergency Drills Content -->
+        <section class="dashboard-header">
+          <h1>Emergency Drills</h1>
+          <p>Plan, schedule and track emergency drills to keep teams prepared and response times fast.</p>
+        </section>
+
+        <section class="heatmap-container" aria-label="Emergency Drills">
+          <div class="heatmap-header" style="align-items:center; gap:12px;">
+            <h2>Drill Schedule & Management</h2>
+            <div class="heatmap-controls" style="margin-left:auto;">
+              <button class="control-button"><i class="fa-solid fa-calendar-plus"></i> Schedule Drill</button>
+              <button class="control-dropdown"><i class="fa-solid fa-filter"></i> Filter</button>
+            </div>
+          </div>
+
+          <div style="margin-top:18px; display:grid; grid-template-columns:1fr 360px; gap:18px;">
+            <!-- LEFT: Schedule + upcoming drills -->
+            <div>
+              <div style="background:var(--bg-card); padding:18px; border-radius:12px;">
+                <h3 style="margin:0 0 8px;font-size:16px;">Upcoming Drills</h3>
+
+                <div style="display:flex;flex-direction:column;gap:12px; margin-top:12px;">
+                  <div class="drill-card" style="display:flex;justify-content:space-between;align-items:center;padding:12px;border-radius:10px;background:#FBFDFF;">
+                    <div>
+                      <h4 style="margin:0;font-size:15px;">Beach Evacuation Drill</h4>
+                      <div style="font-size:13px;color:var(--text-secondary);">Apr 15, 2026 — 09:00 AM • Lead: Beach Patrol</div>
+                    </div>
+                    <div style="display:flex;gap:8px;align-items:center;">
+                      <button class="control-button" style="padding:8px 10px;">View</button>
+                      <button class="control-button" style="background:#F59E0B;color:#fff;padding:8px 10px;">Start</button>
+                    </div>
+                  </div>
+
+                  <div class="drill-card" style="display:flex;justify-content:space-between;align-items:center;padding:12px;border-radius:10px;background:#FBFDFF;">
+                    <div>
+                      <h4 style="margin:0;font-size:15px;">Mountain Rescue Drill</h4>
+                      <div style="font-size:13px;color:var(--text-secondary);">Apr 22, 2026 — 06:00 AM • Lead: Forest Rangers</div>
+                    </div>
+                    <div style="display:flex;gap:8px;align-items:center;">
+                      <button class="control-button" style="padding:8px 10px;">View</button>
+                      <button class="control-button" style="background:#3B82F6;color:#fff;padding:8px 10px;">Edit</button>
+                    </div>
+                  </div>
+
+                  <div class="drill-card" style="display:flex;justify-content:space-between;align-items:center;padding:12px;border-radius:10px;background:#FBFDFF;">
+                    <div>
+                      <h4 style="margin:0;font-size:15px;">Mass Casualty Exercise</h4>
+                      <div style="font-size:13px;color:var(--text-secondary);">May 05, 2026 — 08:00 AM • Lead: General Hospital</div>
+                    </div>
+                    <div style="display:flex;gap:8px;align-items:center;">
+                      <button class="control-button" style="padding:8px 10px;">View</button>
+                      <button class="control-button" style="background:#DC2626;color:#fff;padding:8px 10px;">Cancel</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Drill History / Logs -->
+              <div style="margin-top:12px;background:var(--bg-card); padding:18px; border-radius:12px;">
+                <h3 style="margin:0 0 8px;font-size:16px;">Past Drills & Logs</h3>
+                <p style="margin:6px 0 0;color:var(--text-secondary);font-size:14px;">View completed drills and after-action reports.</p>
+
+                <ul style="margin-top:12px; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px;">
+                  <li style="display:flex;justify-content:space-between;align-items:center;">
+                    <div>
+                      <strong>Beach Evacuation — Mar 10, 2026</strong>
+                      <div style="font-size:13px;color:var(--text-secondary);">Actions: 2 issues found • Improvements scheduled</div>
+                    </div>
+                    <a href="#" style="color:var(--color-blue);">Report</a>
+                  </li>
+
+                  <li style="display:flex;justify-content:space-between;align-items:center;">
+                    <div>
+                      <strong>Radio Network Test — Feb 28, 2026</strong>
+                      <div style="font-size:13px;color:var(--text-secondary);">No issues • All channels green</div>
+                    </div>
+                    <a href="#" style="color:var(--color-blue);">Report</a>
+                  </li>
+
+                  <li style="display:flex;justify-content:space-between;align-items:center;">
+                    <div>
+                      <strong>Earthquake Simulation — Feb 12, 2026</strong>
+                      <div style="font-size:13px;color:var(--text-secondary);">Response time improved by 23%</div>
+                    </div>
+                    <a href="#" style="color:var(--color-blue);">Report</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- RIGHT: Drill analytics + quick actions -->
+            <aside style="display:flex;flex-direction:column;gap:12px;">
+              <div style="background:var(--bg-card); padding:18px; border-radius:12px;">
+                <h3 style="margin:0 0 8px;font-size:16px;">Drill Readiness</h3>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;">
+                  <div style="background:#FBFDFF;padding:12px;border-radius:8px;">
+                    <div style="font-weight:700;font-size:18px;">82%</div>
+                    <div style="font-size:12px;color:var(--text-secondary);">Personnel Availability</div>
+                  </div>
+                  <div style="background:#FBFDFF;padding:12px;border-radius:8px;">
+                    <div style="font-weight:700;font-size:18px;">95%</div>
+                    <div style="font-size:12px;color:var(--text-secondary);">Equipment Readiness</div>
+                  </div>
+                </div>
+                <div style="margin-top:12px;font-size:13px;color:var(--text-secondary);">Next drill checklist: radios ✓, med kits ✓, transport ✓</div>
+              </div>
+
+              <div style="background:var(--bg-card); padding:18px; border-radius:12px;">
+                <h3 style="margin:0 0 8px;font-size:16px;">Quick Actions</h3>
+                <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px;">
+                  <button class="control-button" style="width:100%;"><i class="fa-solid fa-bell"></i> Send Drill Reminder</button>
+                  <button class="control-button" style="width:100%;"><i class="fa-solid fa-map-pin"></i> Allocate Staging Areas</button>
+                  <button class="control-button" style="width:100%;"><i class="fa-solid fa-file-arrow-down"></i> Export Drill Roster</button>
+                </div>
+              </div>
+
+              <div style="background:var(--bg-card); padding:18px; border-radius:12px;">
+                <h3 style="margin:0 0 8px;font-size:16px;">Calendar</h3>
+                <p style="margin:0;color:var(--text-secondary);font-size:13px;">(Integrate a calendar widget here — FullCalendar / native)</p>
+                <div style="margin-top:12px; padding:12px; border-radius:8px; background:#FBFDFF; text-align:center; color:var(--text-secondary);">Apr 2026 • May 2026</div>
+              </div>
+            </aside>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Shared JS: active nav + hamburger + accessibility -->
+  <script>
+    (function () {
+      const sidebar = document.getElementById('sidebar');
+      const hamburger = document.getElementById('hamburger');
+
+      function isSmall() { return window.innerWidth <= 900; }
+
+      // Hamburger toggle
+      hamburger.addEventListener('click', () => {
+        if (isSmall()) sidebar.classList.toggle('expanded');
+        else sidebar.classList.toggle('collapsed');
+      });
+
+      // Close sidebar when clicking outside on small screens
+      document.addEventListener('click', (e) => {
+        if (!isSmall()) return;
+        const target = e.target;
+        if (!sidebar.contains(target) && sidebar.classList.contains('expanded')) {
+          sidebar.classList.remove('expanded');
+        }
+      });
+
+      // Accessibility: close with Escape
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && sidebar.classList.contains('expanded')) {
+          sidebar.classList.remove('expanded');
+        }
+      });
+
+      // Focus main content when pressing Enter on hamburger
+      hamburger.addEventListener('keydown', (ev) => {
+        if (ev.key === 'Enter') {
+          document.getElementById('mainContent').focus();
+        }
+      });
+
+      // Mark active link based on filename
+      const current = location.pathname.split('/').pop() || 'emergency-drills.html';
+      document.querySelectorAll('.sidebar-nav a').forEach(a => {
+        if (a.dataset.page === current) {
+          a.classList.add('active');
+          a.setAttribute('aria-current', 'page');
+        } else {
+          a.classList.remove('active');
+          a.removeAttribute('aria-current');
+        }
+      });
+
+      // Responsive cleanup on resize
+      let resizeTimer;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+          if (!isSmall()) sidebar.classList.remove('expanded');
+        }, 120);
+      });
+    })();
+  </script>
+</body>
+</html>
