@@ -1,0 +1,25 @@
+{
+    "ok": "ശരി",
+    "missing_fields": "വിവരം അപൂർണ്ണമാണ്",
+    "email_exists": "ഇമെയിൽ ഇതിനകം രജിസ്റ്റർ ചെയ്തിരിക്കുന്നു",
+    "signup_error": "സൈൻഅപ്പ് പിശക്",
+    "missing_credentials": "ആവശ്യമായ വിവരങ്ങൾ ഇല്ല",
+    "invalid_credentials": "ഇമെയിൽ അല്ലെങ്കിൽ പാസ്‌വേഡ് തെറ്റ്",
+    "login_error": "ലോഗിൻ പിശക്",
+    "missing_or_malformed_token": "ടോക്കൺ ഇല്ല അല്ലെങ്കിൽ തെറ്റാണ്",
+    "invalid_token": "അസാധുവായ ടോക്കൺ",
+    "profile_fetch_failed": "പ്രൊഫൈൽ നേടാൻ കഴിഞ്ഞില്ല",
+    "unsupported_language": "ഭാഷ പിന്തുണയ്ക്കുന്നില്ല",
+    "profile_update_failed": "പ്രൊഫൈൽ അപ്‌ഡേറ്റ് പരാജയപ്പെട്ടു",
+    "family_create_failed": "കുടുംബം സൃഷ്‌ടിക്കാൻ പരാജയപ്പെട്ടു",
+    "family_not_found": "കുടുംബം കണ്ടെത്താനായില്ല",
+    "family_join_failed": "കുടുംബത്തിൽ ചേരാൻ പരാജയപ്പെട്ടു",
+    "not_family_member": "വിലക്കപ്പെട്ടത്: നിങ്ങൾ ഈ കുടുംബാംഗമല്ല.",
+    "family_members_failed": "കുടുംബാംഗങ്ങളെ കണ്ടെത്താൻ പരാജയപ്പെട്ടു",
+    "not_in_family": "നിങ്ങൾ ഒരു കുടുംബത്തിലുമില്ല.",
+    "owner_must_transfer": "പുറത്തുപോകുന്നതിന് മുമ്പ് പുതിയ ഉടമയെ നിയമിക്കുക.",
+    "left_family": "നിങ്ങൾ കുടുംബം വിട്ടു.",
+    "family_leave_failed": "കുടുംബം വിടുന്നത് പരാജയപ്പെട്ടു",
+    "welcome_user": "സ്വാഗതം, {{name}}!"
+  }
+  

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Cross-Agency Hub — Tourism & Police Coordination Dashboard</title>
+
+  <!-- Icons & Fonts -->
+  <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/js/all.min.js" defer></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+
+  <!-- Your existing stylesheet -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="dashboard-shell">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+      <div class="sidebar-header">
+        <div class="sidebar-logo" aria-hidden="true">TPCD</div>
+        <div class="sidebar-title"><h1>T.R.A.I.L.</h1></div>
+      </div>
+
+      <nav class="sidebar-nav" aria-label="Primary">
+        <ul>
+          <li><a href="index.html" data-page="index.html"><i class="fa-solid fa-clock-rotate-left"></i> <span class="nav-text">Dashboard</span></a></li>
+          <li><a href="heatmaps.html" data-page="heatmaps.html"><i class="fa-solid fa-chart-area"></i> <span class="nav-text">Heatmaps & Clustering</span></a></li>
+          <li><a href="timeline.html" data-page="timeline.html"><i class="fa-solid fa-code-fork"></i> <span class="nav-text">Incident Timeline</span></a></li>
+          <li><a href="ai-alerts.html" data-page="ai-alerts.html"><i class="fa-solid fa-robot"></i> <span class="nav-text">AI Alert System</span></a></li>
+          <li><a href="cross-agency.html" data-page="cross-agency.html" class="active"><i class="fa-solid fa-share-nodes"></i> <span class="nav-text">Cross-Agency Hub</span></a></li>
+          <li><a href="case-management.html" data-page="case-management.html"><i class="fa-solid fa-folder"></i> <span class="nav-text">Case Management</span></a></li>
+          <li><a href="resource-allocation.html" data-page="resource-allocation.html"><i class="fa-solid fa-users"></i> <span class="nav-text">Resource Allocation</span></a></li>
+          <li><a href="emergency-drills.html" data-page="emergency-drills.html"><i class="fa-solid fa-graduation-cap"></i> <span class="nav-text">Emergency Drills</span></a></li>
+          <li><a href="analytics.html" data-page="analytics.html"><i class="fa-solid fa-chart-line"></i> <span class="nav-text">Analytics</span></a></li>
+          <li><a href="settings.html" data-page="settings.html"><i class="fa-solid fa-cog"></i> <span class="nav-text">Settings</span></a></li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-footer">Signed in as <strong>Officer Ankit</strong></div>
+    </aside>
+
+    <!-- Main column -->
+    <div class="main-column">
+      <header class="main-header">
+        <div class="main-header-left">
+          <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+
+          <div class="search-bar" role="search" aria-label="Search incidents">
+            <i class="fa-solid fa-search" aria-hidden="true"></i>
+            <input type="text" placeholder="Search incidents, locations..." />
+          </div>
+        </div>
+
+        <div class="header-actions">
+          <div class="notification-bell" title="Notifications" aria-live="polite">
+            <i class="fa-regular fa-bell"></i>
+            <div class="notification-badge">3</div>
+          </div>
+
+          <div class="user-profile" role="button" tabindex="0" title="Account">
+            <img src="https://randomuser.me/api/portraits/men/44.jpg" alt="Officer Ankit profile" />
+            <span>Officer Ankit</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+        </div>
+      </header>
+
+      <main id="mainContent" tabindex="0">
+        <!-- Cross-Agency Hub Content -->
+        <section class="dashboard-header">
+          <h1>Cross-Agency Integration Hub</h1>
+          <p>Coordinate alerts, resources and communication across partner agencies in real time.</p>
+        </section>
+
+        <section class="heatmap-container" aria-label="Cross-Agency Integration Hub">
+          <div class="heatmap-header" style="align-items:flex-start; gap:12px;">
+            <h2>Cross-Agency Integration Hub</h2>
+            <div class="heatmap-controls" style="margin-left:auto;">
+              <div class="status-indicator" style="display:flex; align-items:center; gap:8px; font-size:14px;">
+                <div class="status-dot" aria-hidden="true" style="width:10px; height:10px; background:#34D399; border-radius:50%;"></div>
+                <span style="color:var(--text-secondary)">All Systems Connected</span>
+              </div>
+              <button class="control-button" style="margin-left:12px;"><i class="fa-solid fa-rotate"></i> Sync Status</button>
+            </div>
+          </div>
+
+          <div style="margin-top:18px;">
+            <!-- Summary grid -->
+            <section class="summary-grid" aria-label="Agency summary">
+              <div class="summary-card summary-card--red">
+                <div class="summary-card-header">
+                  <div class="summary-icon-container summary-icon-container--red"><i class="fa-solid fa-hospital"></i></div>
+                  <h3 class="summary-card-title">Hospitals</h3>
+                </div>
+                <div class="summary-card-body">
+                  <p>3 facilities connected</p>
+                  <p>Available beds: 47</p>
+                  <p>Response time: 8 min avg</p>
+                </div>
+                <div class="summary-card-status-dot" aria-hidden="true"></div>
+              </div>
+
+              <div class="summary-card summary-card--yellow">
+                <div class="summary-card-header">
+                  <div class="summary-icon-container summary-icon-container--yellow"><i class="fa-solid fa-fire-flame-curved"></i></div>
+                  <h3 class="summary-card-title">Disaster Response</h3>
+                </div>
+                <div class="summary-card-body">
+                  <p>Emergency services</p>
+                  <p>Units deployed: 12</p>
+                  <p>Status: Ready</p>
+                </div>
+                <div class="summary-card-status-dot" aria-hidden="true"></div>
+              </div>
+
+              <div class="summary-card summary-card--green">
+                <div class="summary-card-header">
+                  <div class="summary-icon-container summary-icon-container--green"><i class="fa-solid fa-tree"></i></div>
+                  <h3 class="summary-card-title">Forest Department</h3>
+                </div>
+                <div class="summary-card-body">
+                  <p>Wildlife & trails</p>
+                  <p>Rangers: 18 active</p>
+                  <p>Trail status: Open</p>
+                </div>
+                <div class="summary-card-status-dot" aria-hidden="true"></div>
+              </div>
+
+              <div class="summary-card summary-card--blue">
+                <div class="summary-card-header">
+                  <div class="summary-icon-container summary-icon-container--blue"><i class="fa-solid fa-shield-halved"></i></div>
+                  <h3 class="summary-card-title">Security Agencies</h3>
+                </div>
+                <div class="summary-card-body">
+                  <p>Border & customs</p>
+                  <p>Alert level: Normal</p>
+                  <p>Checkpoints: Active</p>
+                </div>
+                <div class="summary-card-status-dot" aria-hidden="true"></div>
+              </div>
+            </section>
+
+            <!-- Main content: recent alerts + channels -->
+            <section class="main-content-grid" aria-label="Cross-agency main" style="margin-top:18px;">
+              <div class="content-section">
+                <h4 class="content-section-title">Recent Shared Alerts</h4>
+                <div class="alerts-list">
+                  <div class="alert-card">
+                    <div class="alert-icon-container alert-icon-container--red"><i class="fa-solid fa-house-medical"></i></div>
+                    <div class="alert-content">
+                      <h5 class="alert-title">Medical Emergency Alert</h5>
+                      <p class="alert-subtitle">Shared with General Hospital & Rescue Team</p>
+                      <div class="alert-footer">
+                        <span class="alert-time">5 min ago</span>
+                        <span class="status-tag status-tag--acknowledged">Acknowledged</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="alert-card">
+                    <div class="alert-icon-container alert-icon-container--yellow"><i class="fa-solid fa-cloud-sun"></i></div>
+                    <div class="alert-content">
+                      <h5 class="alert-title">Weather Warning</h5>
+                      <p class="alert-subtitle">Sent to Forest Dept. & Beach Patrol</p>
+                      <div class="alert-footer">
+                        <span class="alert-time">12 min ago</span>
+                        <span class="status-tag status-tag--in-progress">In Progress</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="alert-card">
+                    <div class="alert-icon-container alert-icon-container--green"><i class="fa-solid fa-tree"></i></div>
+                    <div class="alert-content">
+                      <h5 class="alert-title">Trail Closure Notice</h5>
+                      <p class="alert-subtitle">Coordinated with Park Rangers</p>
+                      <div class="alert-footer">
+                        <span class="alert-time">1 hour ago</span>
+                        <span class="status-tag status-tag--completed">Completed</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="content-section">
+                <h4 class="content-section-title">Communication Channels</h4>
+                <div class="channels-list">
+                  <div class="channel-card">
+                    <div class="channel-header">
+                      <h5 class="channel-title">Emergency Hotline</h5>
+                      <span class="status-tag status-tag--active">Active</span>
+                    </div>
+                    <div class="channel-details">
+                      <div class="channel-detail-row"><span class="channel-detail-label">Calls today:</span><span class="channel-detail-value">47</span></div>
+                      <div class="channel-detail-row"><span class="channel-detail-label">Avg response:</span><span class="channel-detail-value">23 seconds</span></div>
+                      <div class="channel-detail-row"><span class="channel-detail-label">Queue status:</span><span class="channel-detail-value channel-detail-value--green">Clear</span></div>
+                    </div>
+                  </div>
+
+                  <div class="channel-card">
+                    <div class="channel-header">
+                      <h5 class="channel-title">Secure Radio Network</h5>
+                      <span class="status-tag status-tag--connected">Connected</span>
+                    </div>
+                    <div class="channel-details">
+                      <div class="channel-detail-row"><span class="channel-detail-label">Active channels:</span><span class="channel-detail-value">8</span></div>
+                      <div class="channel-detail-row"><span class="channel-detail-label">Signal strength:</span><span class="channel-detail-value">95%</span></div>
+                      <div class="channel-detail-row"><span class="channel-detail-label">Encryption:</span><span class="channel-detail-value channel-detail-value--blue">AES-256</span></div>
+                    </div>
+                  </div>
+
+                  <div class="channel-card">
+                    <div class="channel-header">
+                      <h5 class="channel-title">Digital Alert System</h5>
+                      <span class="status-tag status-tag--operational">Operational</span>
+                    </div>
+                    <div class="channel-details">
+                      <div class="channel-detail-row"><span class="channel-detail-label">Messages sent:</span><span class="channel-detail-value">156</span></div>
+                      <div class="channel-detail-row"><span class="channel-detail-label">Delivery rate:</span><span class="channel-detail-value">98.7%</span></div>
+                      <div class="channel-detail-row"><span class="channel-detail-label">Response rate:</span><span class="channel-detail-value">87%</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Shared JS: active nav + hamburger + accessibility -->
+  <script>
+    (function () {
+      const sidebar = document.getElementById('sidebar');
+      const hamburger = document.getElementById('hamburger');
+
+      function isSmall() { return window.innerWidth <= 900; }
+
+      // Hamburger toggle
+      hamburger.addEventListener('click', () => {
+        if (isSmall()) sidebar.classList.toggle('expanded');
+        else sidebar.classList.toggle('collapsed');
+      });
+
+      // Close sidebar when clicking outside on small screens
+      document.addEventListener('click', (e) => {
+        if (!isSmall()) return;
+        const target = e.target;
+        if (!sidebar.contains(target) && sidebar.classList.contains('expanded')) {
+          sidebar.classList.remove('expanded');
+        }
+      });
+
+      // Accessibility: close with Escape
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && sidebar.classList.contains('expanded')) {
+          sidebar.classList.remove('expanded');
+        }
+      });
+
+      // Focus main content when pressing Enter on hamburger
+      hamburger.addEventListener('keydown', (ev) => {
+        if (ev.key === 'Enter') {
+          document.getElementById('mainContent').focus();
+        }
+      });
+
+      // Mark active link based on filename
+      const current = location.pathname.split('/').pop() || 'cross-agency.html';
+      document.querySelectorAll('.sidebar-nav a').forEach(a => {
+        if (a.dataset.page === current) {
+          a.classList.add('active');
+          a.setAttribute('aria-current', 'page');
+        } else {
+          a.classList.remove('active');
+          a.removeAttribute('aria-current');
+        }
+      });
+
+      // Responsive cleanup on resize
+      let resizeTimer;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+          if (!isSmall()) sidebar.classList.remove('expanded');
+        }, 120);
+      });
+    })();
+  </script>
+</body>
+</html>

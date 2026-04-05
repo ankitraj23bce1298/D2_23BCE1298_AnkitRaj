@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Settings — Tourism & Police Coordination Dashboard</title>
+
+  <!-- Icons & Fonts -->
+  <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/js/all.min.js" defer></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+
+  <!-- Your stylesheet -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="dashboard-shell">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+      <div class="sidebar-header">
+        <div class="sidebar-logo" aria-hidden="true">TPCD</div>
+        <div class="sidebar-title"><h1>T.R.A.I.L.</h1></div>
+      </div>
+
+      <nav class="sidebar-nav" aria-label="Primary">
+        <ul>
+          <li><a href="index.html" data-page="index.html"><i class="fa-solid fa-clock-rotate-left"></i> <span class="nav-text">Dashboard</span></a></li>
+          <li><a href="heatmaps.html" data-page="heatmaps.html"><i class="fa-solid fa-chart-area"></i> <span class="nav-text">Heatmaps & Clustering</span></a></li>
+          <li><a href="timeline.html" data-page="timeline.html"><i class="fa-solid fa-code-fork"></i> <span class="nav-text">Incident Timeline</span></a></li>
+          <li><a href="ai-alerts.html" data-page="ai-alerts.html"><i class="fa-solid fa-robot"></i> <span class="nav-text">AI Alert System</span></a></li>
+          <li><a href="cross-agency.html" data-page="cross-agency.html"><i class="fa-solid fa-share-nodes"></i> <span class="nav-text">Cross-Agency Hub</span></a></li>
+          <li><a href="case-management.html" data-page="case-management.html"><i class="fa-solid fa-folder"></i> <span class="nav-text">Case Management</span></a></li>
+          <li><a href="resource-allocation.html" data-page="resource-allocation.html"><i class="fa-solid fa-users"></i> <span class="nav-text">Resource Allocation</span></a></li>
+          <li><a href="emergency-drills.html" data-page="emergency-drills.html"><i class="fa-solid fa-graduation-cap"></i> <span class="nav-text">Emergency Drills</span></a></li>
+          <li><a href="analytics.html" data-page="analytics.html"><i class="fa-solid fa-chart-line"></i> <span class="nav-text">Analytics</span></a></li>
+          <li><a href="settings.html" data-page="settings.html" class="active"><i class="fa-solid fa-cog"></i> <span class="nav-text">Settings</span></a></li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-footer">Signed in as <strong>Officer Ankit</strong></div>
+    </aside>
+
+    <!-- Main column -->
+    <div class="main-column">
+      <header class="main-header">
+        <div class="main-header-left">
+          <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+
+          <div class="search-bar" role="search" aria-label="Search incidents">
+            <i class="fa-solid fa-search" aria-hidden="true"></i>
+            <input type="text" placeholder="Search incidents, locations..." />
+          </div>
+        </div>
+
+        <div class="header-actions">
+          <div class="notification-bell" title="Notifications" aria-live="polite">
+            <i class="fa-regular fa-bell"></i>
+            <div class="notification-badge">3</div>
+          </div>
+
+          <div class="user-profile" role="button" tabindex="0" title="Account">
+            <img src="https://randomuser.me/api/portraits/men/44.jpg" alt="Officer Ankit profile" />
+            <span>Officer Ankit</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+        </div>
+      </header>
+
+      <main id="mainContent" tabindex="0">
+        <section class="dashboard-header">
+          <h1>Settings</h1>
+          <p>Configure account, notifications, AI behavior and system preferences.</p>
+        </section>
+
+        <section style="display:grid; grid-template-columns:1fr 360px; gap:18px;">
+          <!-- LEFT: Settings forms -->
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div style="background:var(--bg-card); padding:18px; border-radius:12px;">
+              <h3 style="margin:0 0 8px;font-size:16px;">Account</h3>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px;">
+                <div>
+                  <label style="display:block;font-weight:600;color:var(--text-primary);margin-bottom:6px;">Display Name</label>
+                  <input type="text" value="Officer Ankit" style="width:100%;padding:10px;border:1px solid var(--border-color);border-radius:8px;background:#FBFDFF;">
+                </div>
+                <div>
+                  <label style="display:block;font-weight:600;color:var(--text-primary);margin-bottom:6px;">Role</label>
+                  <select style="width:100%;padding:10px;border:1px solid var(--border-color);border-radius:8px;background:#FBFDFF;">
+                    <option>Operations — Officer</option>
+                    <option>Administrator</option>
+                  </select>
+                </div>
+                <div>
+                  <label style="display:block;font-weight:600;color:var(--text-primary);margin-bottom:6px;">Email</label>
+                  <input type="email" value="ankit@trail.local" style="width:100%;padding:10px;border:1px solid var(--border-color);border-radius:8px;background:#FBFDFF;">
+                </div>
+                <div>
+                  <label style="display:block;font-weight:600;color:var(--text-primary);margin-bottom:6px;">Phone</label>
+                  <input type="tel" value="+91 98765 43210" style="width:100%;padding:10px;border:1px solid var(--border-color);border-radius:8px;background:#FBFDFF;">
+                </div>
+              </div>
+
+              <div style="margin-top:12px;display:flex;gap:8px;">
+                <button class="control-button">Save Changes</button>
+                <button class="control-button" style="background:#DC2626;color:#fff;">Deactivate Account</button>
+              </div>
+            </div>
+
+            <div style="background:var(--bg-card); padding:18px; border-radius:12px;">
+              <h3 style="margin:0 0 8px;font-size:16px;">Notifications</h3>
+
+              <div style="display:flex;flex-direction:column;gap:10px;margin-top:8px;">
+                <label style="display:flex;justify-content:space-between;align-items:center;">
+                  <span>Push Notifications</span>
+                  <input type="checkbox" checked>
+                </label>
+
+                <label style="display:flex;justify-content:space-between;align-items:center;">
+                  <span>Email Alerts</span>
+                  <input type="checkbox" checked>
+                </label>
+
+                <label style="display:flex;justify-content:space-between;align-items:center;">
+                  <span>SMS Alerts</span>
+                  <input type="checkbox">
+                </label>
+
+                <label style="display:flex;justify-content:space-between;align-items:center;">
+                  <span>Daily Summary</span>
+                  <input type="checkbox" checked>
+                </label>
+              </div>
+            </div>
+
+            <div style="background:var(--bg-card); padding:18px; border-radius:12px;">
+              <h3 style="margin:0 0 8px;font-size:16px;">AI & Automation</h3>
+              <p style="margin:0;color:var(--text-secondary);font-size:13px;">Configure AI filtering, confidence thresholds and auto-dispatch options.</p>
+
+              <div style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                <div>
+                  <label style="display:block;font-weight:600;color:var(--text-primary);margin-bottom:6px;">Auto-Filter Threshold</label>
+                  <input type="range" min="50" max="100" value="87" id="aiThreshold" />
+                  <div style="font-size:13px;color:var(--text-secondary);margin-top:6px;">Current: <span id="aiThresholdVal">87%</span></div>
+                </div>
+
+                <div>
+                  <label style="display:block;font-weight:600;color:var(--text-primary);margin-bottom:6px;">Auto-Dispatch</label>
+                  <label style="display:flex;align-items:center;gap:8px;">
+                    <input type="checkbox" id="autoDispatch" checked />
+                    <span style="font-size:13px;color:var(--text-secondary);">Allow AI to auto-deploy recommended units</span>
+                  </label>
+                </div>
+              </div>
+
+              <div style="margin-top:12px;">
+                <label style="display:block;font-weight:600;color:var(--text-primary);margin-bottom:6px;">Model Version</label>
+                <select style="width:220px;padding:10px;border:1px solid var(--border-color);border-radius:8px;background:#FBFDFF;">
+                  <option>ai-v3.2 (stable)</option>
+                  <option>ai-v4-beta</option>
+                </select>
+              </div>
+            </div>
+
+            <div style="background:var(--bg-card); padding:18px; border-radius:12px;">
+              <h3 style="margin:0 0 8px;font-size:16px;">Integrations</h3>
+              <p style="margin:0;color:var(--text-secondary);font-size:13px;">Connect to external systems (CCTV, mobile data, hospital APIs).</p>
+
+              <ul style="margin-top:12px; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px;">
+                <li style="display:flex;justify-content:space-between;align-items:center;">
+                  <div><strong>CCTV Network</strong><div style="font-size:12px;color:var(--text-secondary);">24 cameras connected</div></div>
+                  <button class="control-button">Manage</button>
+                </li>
+                <li style="display:flex;justify-content:space-between;align-items:center;">
+                  <div><strong>Mobile Data</strong><div style="font-size:12px;color:var(--text-secondary);">GPS provider</div></div>
+                  <button class="control-button">Manage</button>
+                </li>
+                <li style="display:flex;justify-content:space-between;align-items:center;">
+                  <div><strong>Hospital APIs</strong><div style="font-size:12px;color:var(--text-secondary);">Health system integration</div></div>
+                  <button class="control-button">Manage</button>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- RIGHT: Admin / System -->
+          <aside style="display:flex;flex-direction:column;gap:12px;">
+            <div style="background:var(--bg-card); padding:18px; border-radius:12px;">
+              <h3 style="margin:0 0 8px;font-size:16px;">Security</h3>
+              <div style="display:flex;flex-direction:column;gap:8px;">
+                <button class="control-button" style="width:100%;">Change Password</button>
+                <button class="control-button" style="width:100%;">Manage Two-factor Auth</button>
+                <button class="control-button" style="width:100%;">View Login Activity</button>
+              </div>
+            </div>
+
+            <div style="background:var(--bg-card); padding:18px; border-radius:12px;">
+              <h3 style="margin:0 0 8px;font-size:16px;">System</h3>
+              <div style="display:flex;flex-direction:column;gap:8px;font-size:13px;color:var(--text-secondary);">
+                <div>Version: <strong>v1.0.0</strong></div>
+                <div>Last backup: <strong>Sep 18, 2025 — 02:12 AM</strong></div>
+                <div>Uptime: <strong>99.98%</strong></div>
+              </div>
+
+              <div style="margin-top:12px;display:flex;gap:8px;">
+                <button class="control-button">Run Health Check</button>
+                <button class="control-button" style="background:#F59E0B;color:#fff;">Update Now</button>
+              </div>
+            </div>
+
+            <div style="background:var(--bg-card); padding:18px; border-radius:12px;">
+              <h3 style="margin:0 0 8px;font-size:16px;">Audit Logs</h3>
+              <div style="height:200px; overflow:auto; border-radius:8px; border:1px dashed var(--border-color); padding:8px; color:var(--text-secondary); font-size:13px;">
+                <div style="margin-bottom:8px;"><strong>Sep 20, 2025 11:05</strong> — Admin updated AI threshold</div>
+                <div style="margin-bottom:8px;"><strong>Sep 19, 2025 09:42</strong> — CCTV integration token refreshed</div>
+                <div style="margin-bottom:8px;"><strong>Sep 18, 2025 02:12</strong> — System backup completed</div>
+                <div style="margin-bottom:8px;"><strong>Sep 17, 2025 16:30</strong> — User Officer Kumar added</div>
+              </div>
+            </div>
+          </aside>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Shared JS: active nav + hamburger + small UI behavior -->
+  <script>
+    (function () {
+      const sidebar = document.getElementById('sidebar');
+      const hamburger = document.getElementById('hamburger');
+
+      function isSmall() { return window.innerWidth <= 900; }
+
+      // Hamburger toggle
+      hamburger.addEventListener('click', () => {
+        if (isSmall()) sidebar.classList.toggle('expanded');
+        else sidebar.classList.toggle('collapsed');
+      });
+
+      // Close sidebar when clicking outside on small screens
+      document.addEventListener('click', (e) => {
+        if (!isSmall()) return;
+        const target = e.target;
+        if (!sidebar.contains(target) && sidebar.classList.contains('expanded')) {
+          sidebar.classList.remove('expanded');
+        }
+      });
+
+      // Accessibility: close with Escape
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && sidebar.classList.contains('expanded')) {
+          sidebar.classList.remove('expanded');
+        }
+      });
+
+      // Focus main content when pressing Enter on hamburger
+      hamburger.addEventListener('keydown', (ev) => {
+        if (ev.key === 'Enter') {
+          document.getElementById('mainContent').focus();
+        }
+      });
+
+      // Mark active link based on filename
+      const current = location.pathname.split('/').pop() || 'settings.html';
+      document.querySelectorAll('.sidebar-nav a').forEach(a => {
+        if (a.dataset.page === current) {
+          a.classList.add('active');
+          a.setAttribute('aria-current', 'page');
+        } else {
+          a.classList.remove('active');
+          a.removeAttribute('aria-current');
+        }
+      });
+
+      // AI threshold slider display
+      const aiSlider = document.getElementById('aiThreshold');
+      const aiVal = document.getElementById('aiThresholdVal');
+      if (aiSlider && aiVal) {
+        aiSlider.addEventListener('input', () => {
+          aiVal.textContent = aiSlider.value + '%';
+        });
+      }
+
+      // Auto-dispatch toggle: small UX hint
+      const autoDispatch = document.getElementById('autoDispatch');
+      if (autoDispatch) {
+        autoDispatch.addEventListener('change', () => {
+          if (autoDispatch.checked) {
+            alert('Auto-Dispatch enabled. AI may recommend or dispatch resources automatically.');
+          } else {
+            alert('Auto-Dispatch disabled. All deployments require manual approval.');
+          }
+        });
+      }
+
+      // Responsive cleanup on resize
+      let resizeTimer;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+          if (!isSmall()) sidebar.classList.remove('expanded');
+        }, 120);
+      });
+    })();
+  </script>
+</body>
+</html>

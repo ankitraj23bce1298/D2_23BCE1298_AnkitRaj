@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Heatmaps & Clustering — Tourism & Police Coordination Dashboard</title>
+
+  <!-- Icons & Fonts -->
+  <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/js/all.min.js" defer></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+
+  <!-- Your existing stylesheet -->
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Minimal inline styles for geofence panel and map fit -->
+  <style>
+    .geofence-panel {
+      position: absolute;
+      left: 12px;
+      top: 12px;
+      background: rgba(255,255,255,0.98);
+      border: 1px solid rgba(14, 30, 50, 0.06);
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0 8px 24px rgba(2,6,23,0.08);
+      z-index: 1500;
+      min-width: 200px;
+      font-size: 13px;
+    }
+    .geofence-panel .panel-title { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; font-weight:700; color:#0F1724; }
+    .geofence-panel #geofence-list { max-height:220px; overflow:auto; display:flex; flex-direction:column; gap:8px; }
+    .geofence-item { padding:6px; border-radius:8px; background:#fff; border:1px solid #F3F4F6; display:flex; justify-content:space-between; align-items:center; gap:6px; }
+    .btn-small { background:#F3F4F6; border:1px solid #E6EEF4; padding:6px 8px; border-radius:8px; font-weight:700; cursor:pointer; }
+    .btn-small:hover { background:#ECEFF4; }
+    /* ensure map containers fill their wrappers */
+    #map-full { width:100%; height:100%; }
+    /* small hotspot dot colours used in list */
+    .hotspot-dot { width:10px; height:10px; border-radius:50%; display:inline-block; margin-right:8px; }
+    .dot-red { background:#EF4444; }
+    .dot-orange { background:#F97316; }
+    .dot-blue { background:#3B82F6; }
+    .dot-green { background:#10B981; }
+    .map-control { font-weight:600; }
+  </style>
+</head>
+<body>
+  <div class="dashboard-shell">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+      <div class="sidebar-header">
+        <div class="sidebar-logo" aria-hidden="true">TPCD</div>
+        <div class="sidebar-title"><h1>T.R.A.I.L.</h1></div>
+      </div>
+
+      <nav class="sidebar-nav" aria-label="Primary">
+        <ul>
+          <li><a href="index.html" data-page="index.html"><i class="fa-solid fa-clock-rotate-left"></i> <span class="nav-text">Dashboard</span></a></li>
+          <li><a href="heatmaps.html" data-page="heatmaps.html" class="active"><i class="fa-solid fa-chart-area"></i> <span class="nav-text">Heatmaps & Clustering</span></a></li>
+          <li><a href="timeline.html" data-page="timeline.html"><i class="fa-solid fa-code-fork"></i> <span class="nav-text">Incident Timeline</span></a></li>
+          <li><a href="ai-alerts.html" data-page="ai-alerts.html"><i class="fa-solid fa-robot"></i> <span class="nav-text">AI Alert System</span></a></li>
+          <li><a href="cross-agency.html" data-page="cross-agency.html"><i class="fa-solid fa-share-nodes"></i> <span class="nav-text">Cross-Agency Hub</span></a></li>
+          <li><a href="case-management.html" data-page="case-management.html"><i class="fa-solid fa-folder"></i> <span class="nav-text">Case Management</span></a></li>
+          <li><a href="resource-allocation.html" data-page="resource-allocation.html"><i class="fa-solid fa-users"></i> <span class="nav-text">Resource Allocation</span></a></li>
+          <li><a href="emergency-drills.html" data-page="emergency-drills.html"><i class="fa-solid fa-graduation-cap"></i> <span class="nav-text">Emergency Drills</span></a></li>
+          <li><a href="analytics.html" data-page="analytics.html"><i class="fa-solid fa-chart-line"></i> <span class="nav-text">Analytics</span></a></li>
+          <li><a href="settings.html" data-page="settings.html"><i class="fa-solid fa-cog"></i> <span class="nav-text">Settings</span></a></li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-footer">Signed in as <strong>Officer Ankit</strong></div>
+    </aside>
+
+    <!-- Main column -->
+    <div class="main-column">
+      <header class="main-header">
+        <div class="main-header-left">
+          <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+
+          <div class="search-bar" role="search" aria-label="Search incidents">
+            <i class="fa-solid fa-search" aria-hidden="true"></i>
+            <input type="text" placeholder="Search incidents, locations..." />
+          </div>
+        </div>
+
+        <div class="header-actions">
+          <div class="notification-bell" title="Notifications" aria-live="polite">
+            <i class="fa-regular fa-bell"></i>
+            <div class="notification-badge">3</div>
+          </div>
+
+          <div class="user-profile" role="button" tabindex="0" title="Account">
+            <img src="https://randomuser.me/api/portraits/men/44.jpg" alt="Officer Ankit profile" />
+            <span>Officer Ankit</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+        </div>
+      </header>
+
+      <main id="mainContent" tabindex="0">
+        <!-- Page header -->
+        <section class="dashboard-header">
+          <h1>Real-time Heatmaps &amp; Clustering</h1>
+          <p>Visualize tourist density, risk zones and cluster behavior in real-time.</p>
+        </section>
+
+        <section class="heatmap-container" aria-label="Heatmaps and clustering">
+          <div class="heatmap-header">
+            <h2>Heatmaps &amp; Clustering</h2>
+            <div class="heatmap-controls">
+              <button class="control-dropdown" aria-haspopup="listbox">Tourist Density <i class="fa-solid fa-chevron-down"></i></button>
+              <button class="control-button" id="refreshPageBtn"><i class="fa-solid fa-rotate"></i> Refresh</button>
+            </div>
+          </div>
+
+          <div class="heatmap-body" style="align-items:flex-start;">
+            <!-- LEFT: Map + Risk Zones -->
+            <div style="display:flex; flex-direction:column; gap:18px; flex:1;">
+              <!-- FULL MAP wrapper (this is where the map renders) -->
+              <div id="map-wrap-full" class="map-card" style="position:relative; border-radius:12px; overflow:hidden; height:520px; background:var(--bg-card); box-shadow:0 6px 18px rgba(12,20,30,0.06);">
+                <div style="position:absolute; right:16px; top:12px; z-index:1400; display:flex; gap:8px;">
+                  <div id="modeToggleFull" class="map-control" style="padding:6px 10px; border-radius:8px; background:#fff; cursor:pointer;">Heatmap</div>
+                  <div id="refreshBtnFull" class="map-control" style="padding:6px 10px; border-radius:8px; background:#fff; cursor:pointer;">Refresh</div>
+                </div>
+
+                <div id="map-full" style="height:100%; width:100%;"></div>
+              </div>
+
+              <!-- RISK ZONES (kept from original) -->
+              <div class="risk-zones-grid" aria-label="Risk zones">
+                <div class="risk-card" style="background:#FFF1F2;">
+                  <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <h4>High Risk Zones</h4>
+                    <div class="risk-count" style="background:#EF4444;">7</div>
+                  </div>
+                  <div style="color:#6B7280; font-size:14px;">Mountain trails, remote beaches</div>
+                </div>
+
+                <div class="risk-card" style="background:#FFFBEB;">
+                  <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <h4>Medium Risk</h4>
+                    <div class="risk-count" style="background:#F97316;">12</div>
+                  </div>
+                  <div style="color:#6B7280; font-size:14px;">Crowded markets, festivals</div>
+                </div>
+
+                <div class="risk-card" style="background:#F0FDF4;">
+                  <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <h4>Safe Zones</h4>
+                    <div class="risk-count" style="background:#22C55E;">45</div>
+                  </div>
+                  <div style="color:#6B7280; font-size:14px;">Hotels, police stations</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- RIGHT: Hotspots + Cluster analysis -->
+            <aside class="heatmap-sidebar" aria-label="Sidebar with hotspots and cluster analysis">
+              <div class="info-card hotspots-list" aria-labelledby="hotspots-title-full" style="margin-bottom:12px;">
+                <h3 id="hotspots-title-full">Live Tourist Hotspots</h3>
+                <ul id="live-hotspots-list-full">
+                  <!-- populated dynamically -->
+                </ul>
+              </div>
+
+              <div class="info-card cluster-analysis" aria-labelledby="cluster-title-full">
+                <h3 id="cluster-title-full">Cluster Analysis</h3>
+                <div id="cluster-analysis-full">
+                  <div class="analysis-item"><span>Avg. Group Size:</span><span>4.2 people</span></div>
+                  <div class="analysis-item"><span>Peak Hours:</span><span>10AM - 4PM</span></div>
+                  <div class="analysis-item"><span>Movement Pattern:</span><span>Predictable</span></div>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Inline JS: UI behavior (hamburger, nav active) -->
+  <script>
+    (function () {
+      const sidebar = document.getElementById('sidebar');
+      const hamburger = document.getElementById('hamburger');
+
+      function isSmall() { return window.innerWidth <= 900; }
+
+      hamburger.addEventListener('click', () => {
+        if (isSmall()) sidebar.classList.toggle('expanded');
+        else sidebar.classList.toggle('collapsed');
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!isSmall()) return;
+        const target = e.target;
+        if (!sidebar.contains(target) && sidebar.classList.contains('expanded')) {
+          sidebar.classList.remove('expanded');
+        }
+      });
+
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && sidebar.classList.contains('expanded')) {
+          sidebar.classList.remove('expanded');
+        }
+      });
+
+      hamburger.addEventListener('keydown', (ev) => {
+        if (ev.key === 'Enter') {
+          document.getElementById('mainContent').focus();
+        }
+      });
+
+      const current = location.pathname.split('/').pop() || 'heatmaps.html';
+      document.querySelectorAll('.sidebar-nav a').forEach(a => {
+        if (a.dataset.page === current) {
+          a.classList.add('active');
+          a.setAttribute('aria-current', 'page');
+        } else {
+          a.classList.remove('active');
+          a.removeAttribute('aria-current');
+        }
+      });
+
+      document.getElementById('refreshPageBtn')?.addEventListener('click', () => location.reload());
+    })();
+  </script>
+
+  <!-- Maps & Geofencing script -->
+  <script>
+  (function () {
+    /* ---------- config & sample data ---------- */
+    const sampleHotspots = [
+      { name: "Guwahati (Assam)", lat: 26.1445, lng: 91.7362, weight: 10 },
+      { name: "Shillong (Meghalaya)", lat: 25.5788, lng: 91.8933, weight: 8 },
+      { name: "Tawang (Arunachal)", lat: 27.5869, lng: 91.8630, weight: 4 },
+      { name: "Imphal (Manipur)", lat: 24.8170, lng: 93.9368, weight: 6 },
+      { name: "Kohima (Nagaland)", lat: 25.6740, lng: 94.1106, weight: 5 },
+      { name: "Agartala (Tripura)", lat: 23.8315, lng: 91.2868, weight: 4 },
+      { name: "Aizawl (Mizoram)", lat: 23.7271, lng: 92.7176, weight: 3 },
+      { name: "Gangtok (Sikkim)", lat: 27.3389, lng: 88.6065, weight: 3 }
+    ];
+
+    // state
+    let mapFull = null;
+    let markersFull = [];
+    let heatmapFull = null;
+    let drawingManagerFull = null;
+    let geofences = []; // {id, name, polygon, polygonClone, meta}
+    const LS_KEY = 'tpcd_geofences_v1';
+
+    // geographic bounds for NE India (optional)
+    const NE_BOUNDS = { north: 29.5, south: 21.0, west: 85.5, east: 97.5 };
+    function buildNEBounds() {
+      return new google.maps.LatLngBounds(
+        { lat: NE_BOUNDS.south, lng: NE_BOUNDS.west },
+        { lat: NE_BOUNDS.north, lng: NE_BOUNDS.east }
+      );
+    }
+
+    /* ---------- helpers ---------- */
+    function uid(prefix = 'g') {
+      return prefix + '_' + Date.now() + '_' + Math.floor(Math.random() * 9999);
+    }
+
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+
+    /* ---------- hotspots & heatmap ---------- */
+    function addHotspotsToMap() {
+      // clear existing
+      markersFull.forEach(m => m.setMap(null));
+      markersFull = [];
+      if (heatmapFull) { heatmapFull.setMap(null); heatmapFull = null; }
+
+      const heatData = [];
+      for (const h of sampleHotspots) {
+        const marker = new google.maps.Marker({
+          position: { lat: h.lat, lng: h.lng },
+          map: mapFull,
+          title: h.name,
+          optimized: false
+        });
+        const info = new google.maps.InfoWindow({ content: `<strong>${escapeHtml(h.name)}</strong>` });
+        marker.addListener('click', () => info.open(mapFull, marker));
+        markersFull.push(marker);
+
+        heatData.push(new google.maps.LatLng(h.lat, h.lng, h.weight));
+      }
+
+      heatmapFull = new google.maps.visualization.HeatmapLayer({
+        data: sampleHotspots.map(h => ({ location: new google.maps.LatLng(h.lat, h.lng), weight: h.weight })),
+        radius: 40,
+        opacity: 0.6,
+        map: mapFull
+      });
+
+      highlightMarkersInGeofences(markersFull);
+      renderHotspotList();
+    }
+
+    function renderHotspotList() {
+      const list = document.getElementById('live-hotspots-list-full');
+      if (!list) return;
+      list.innerHTML = sampleHotspots.map(h => `<li style="display:flex;justify-content:space-between;"><div><span class="hotspot-dot ${colorClassForWeight(h.weight)}" aria-hidden="true"></span><span style="font-weight:600">${escapeHtml(h.name)}</span></div><div style="font-weight:700">${h.weight}</div></li>`).join('');
+    }
+
+    function colorClassForWeight(w) {
+      if (w >= 9) return 'dot-red';
+      if (w >= 6) return 'dot-orange';
+      if (w >= 4) return 'dot-blue';
+      return 'dot-green';
+    }
+
+    /* ---------- geofence persistence & panel ---------- */
+    function persistGeofences() {
+      try {
+        const simple = geofences.map(g => ({
+          id: g.id,
+          name: g.name,
+          coords: g.polygon.getPath().getArray().map(ll => [ll.lng(), ll.lat()]),
+          meta: g.meta || {}
+        }));
+        localStorage.setItem(LS_KEY, JSON.stringify(simple));
+      } catch (err) {
+        console.warn('persistGeofences error', err);
+      }
+    }
+
+    function restoreGeofences() {
+      const raw = localStorage.getItem(LS_KEY);
+      if (!raw) return;
+      try {
+        const arr = JSON.parse(raw);
+        arr.forEach(item => {
+          const path = item.coords.map(([lng, lat]) => ({ lat, lng }));
+          const poly = new google.maps.Polygon({
+            paths: path,
+            map: mapFull,
+            fillColor: '#E8F5FF',
+            fillOpacity: 0.22,
+            strokeWeight: 2,
+            editable: false
+          });
+
+          const obj = { id: item.id, name: item.name, polygon: poly, polygonClone: null, meta: item.meta || {} };
+          geofences.push(obj);
+          attachFenceListeners(obj);
+        });
+        updateGeofencePanel();
+        highlightMarkersInGeofences(markersFull);
+      } catch (err) {
+        console.warn('restore geofences parse error', err);
+      }
+    }
+
+    function updateGeofencePanel() {
+      const container = document.getElementById('map-wrap-full');
+      if (!container) return;
+
+      // remove old panel(s)
+      container.querySelectorAll('.geofence-panel').forEach(n => n.remove());
+
+      const panel = document.createElement('div');
+      panel.className = 'geofence-panel';
+      panel.innerHTML = `
+        <div class="panel-title">
+          <span>Geofences</span>
+          <span style="font-size:12px;color:#6B7280">${geofences.length}</span>
+        </div>
+        <div id="geofence-list">
+          ${geofences.map(g => `<div class="geofence-item" data-id="${g.id}">
+            <div style="font-weight:700">${escapeHtml(g.name)}</div>
+            <div style="display:flex;gap:6px">
+              <button class="btn-small" data-action="zoom" data-id="${g.id}">Zoom</button>
+              <button class="btn-small" data-action="del" data-id="${g.id}">Del</button>
+            </div>
+          </div>`).join('')}
+        </div>
+        <div style="margin-top:8px;display:flex;gap:8px;justify-content:flex-end">
+          <button id="exportFences" class="btn-small">Export GeoJSON</button>
+          <button id="clearFences" class="btn-small">Clear All</button>
+        </div>
+      `;
+      container.appendChild(panel);
+
+      // attach handlers
+      panel.querySelectorAll('[data-action="zoom"]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.getAttribute('data-id');
+          const f = geofences.find(g => g.id === id);
+          if (f) {
+            const b = new google.maps.LatLngBounds();
+            f.polygon.getPath().getArray().forEach(ll => b.extend(ll));
+            mapFull.fitBounds(b);
+          }
+        });
+      });
+
+      panel.querySelectorAll('[data-action="del"]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.getAttribute('data-id');
+          if (!confirm('Delete this geofence?')) return;
+          const idx = geofences.findIndex(g => g.id === id);
+          if (idx === -1) return;
+          geofences[idx].polygon.setMap(null);
+          geofences.splice(idx, 1);
+          persistGeofences();
+          updateGeofencePanel();
+          highlightMarkersInGeofences(markersFull);
+        });
+      });
+
+      const exp = panel.querySelector('#exportFences');
+      if (exp) exp.addEventListener('click', exportFencesGeoJSON);
+      const clr = panel.querySelector('#clearFences');
+      if (clr) clr.addEventListener('click', () => {
+        if (!confirm('Clear all geofences?')) return;
+        geofences.forEach(g => { try { g.polygon.setMap(null); } catch(e){} });
+        geofences = [];
+        persistGeofences();
+        updateGeofencePanel();
+        highlightMarkersInGeofences(markersFull);
+      });
+    }
+
+    function exportFencesGeoJSON() {
+      const features = geofences.map(g => {
+        const coords = g.polygon.getPath().getArray().map(ll => [ll.lng(), ll.lat()]);
+        if (coords.length > 0 && (coords[0][0] !== coords[coords.length-1][0] || coords[0][1] !== coords[coords.length-1][1])) {
+          coords.push(coords[0]);
+        }
+        return {
+          type: 'Feature',
+          properties: { id: g.id, name: g.name, meta: g.meta || {} },
+          geometry: { type: 'Polygon', coordinates: [coords] }
+        };
+      });
+      const geojson = { type: 'FeatureCollection', features };
+      const blob = new Blob([JSON.stringify(geojson, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `geofences-${new Date().toISOString().slice(0,19)}.geojson`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    /* ---------- overlay handling ---------- */
+    function attachFenceListeners(fenceObj) {
+      // persist edits
+      google.maps.event.addListener(fenceObj.polygon.getPath(), 'set_at', persistGeofences);
+      google.maps.event.addListener(fenceObj.polygon.getPath(), 'insert_at', persistGeofences);
+
+      fenceObj.polygon.addListener('click', () => {
+        const center = getPolygonCentroid(fenceObj.polygon);
+        const iw = new google.maps.InfoWindow({
+          content: `<div style="min-width:160px"><strong>${escapeHtml(fenceObj.name)}</strong><div style="margin-top:6px;"><button id="__zoom_${fenceObj.id}" class="btn-small">Zoom</button> <button id="__del_${fenceObj.id}" class="btn-small">Delete</button></div></div>`,
+          position: center
+        });
+        iw.open(mapFull);
+        google.maps.event.addListenerOnce(iw, 'domready', () => {
+          const z = document.getElementById(`__zoom_${fenceObj.id}`);
+          const d = document.getElementById(`__del_${fenceObj.id}`);
+          if (z) z.addEventListener('click', () => { const b=new google.maps.LatLngBounds(); fenceObj.polygon.getPath().getArray().forEach(ll=>b.extend(ll)); mapFull.fitBounds(b); iw.close(); });
+          if (d) d.addEventListener('click', () => { if (confirm('Delete this geofence?')) { fenceObj.polygon.setMap(null); geofences = geofences.filter(x => x.id !== fenceObj.id); persistGeofences(); updateGeofencePanel(); iw.close(); }});
+        });
+      });
+    }
+
+    function getPolygonCentroid(polygon) {
+      const path = polygon.getPath().getArray();
+      let latSum = 0, lngSum = 0;
+      path.forEach(p => { latSum += p.lat(); lngSum += p.lng(); });
+      return { lat: latSum / path.length, lng: lngSum / path.length };
+    }
+
+    /* ---------- detect markers inside geofences ---------- */
+    function highlightMarkersInGeofences(markers) {
+      if (!markers) return;
+      markers.forEach(m => {
+        let insideAny = false;
+        const pos = m.getPosition();
+        for (const g of geofences) {
+          try {
+            if (google.maps.geometry.poly.containsLocation(pos, g.polygon)) { insideAny = true; break; }
+          } catch (e) {}
+        }
+        if (insideAny) {
+          m.setIcon({ path: google.maps.SymbolPath.CIRCLE, scale: 8, fillColor: '#FF4444', fillOpacity: 1, strokeColor: '#fff', strokeWeight: 2 });
+        } else {
+          m.setIcon(null);
+        }
+      });
+    }
+
+    /* ---------- overlay complete handler (when user draws) ---------- */
+    function handleOverlayComplete(event) {
+      const newOverlay = event.overlay;
+      const shapeType = event.type;
+      let polygon;
+      if (shapeType === 'rectangle') {
+        const bounds = newOverlay.getBounds();
+        const ne = bounds.getNorthEast();
+        const sw = bounds.getSouthWest();
+        const nw = { lat: ne.lat(), lng: sw.lng() };
+        const se = { lat: sw.lat(), lng: ne.lng() };
+        const path = [ {lat: ne.lat(), lng: ne.lng()}, nw, {lat: sw.lat(), lng: sw.lng()}, se ];
+        polygon = new google.maps.Polygon({
+          paths: path,
+          map: mapFull,
+          editable: true,
+          fillColor: '#E8F5FF',
+          fillOpacity: 0.22,
+          strokeWeight: 2
+        });
+        newOverlay.setMap(null);
+      } else if (shapeType === 'polygon') {
+        polygon = newOverlay;
+        polygon.setOptions({ editable: true, fillColor: '#E8F5FF', fillOpacity: 0.22 });
+      } else {
+        newOverlay.setMap(null);
+        return;
+      }
+
+      let name = prompt('Name this geofence (e.g., "Shillong Market"):', '');
+      if (name === null) name = 'Unnamed area';
+
+      const pathCopy = polygon.getPath().getArray().map(p => ({ lat: p.lat(), lng: p.lng() }));
+      const polygonClone = new google.maps.Polygon({
+        paths: pathCopy,
+        map: mapFull,
+        editable: false,
+        fillColor: '#E8F5FF',
+        fillOpacity: 0.22,
+        strokeWeight: 2
+      });
+
+      const fenceObj = {
+        id: uid('f'),
+        name,
+        polygon,
+        polygonClone,
+        meta: { created: new Date().toISOString(), type: shapeType }
+      };
+
+      polygon.setEditable(false);
+      geofences.push(fenceObj);
+      persistGeofences();
+      updateGeofencePanel();
+      attachFenceListeners(fenceObj);
+      highlightMarkersInGeofences(markersFull);
+    }
+
+    /* ---------- initialize maps (callback from Google Maps) ---------- */
+    window.initMaps = function initMaps() {
+      const centerNE = { lat: 26.0, lng: 93.5 };
+      const commonOpts = {
+        center: centerNE,
+        zoom: 6,
+        streetViewControl: false,
+        mapTypeControl: false,
+        fullscreenControl: false,
+        restriction: {
+          latLngBounds: buildNEBounds(),
+          strictBounds: false
+        }
+      };
+
+      const elFull = document.getElementById('map-full');
+      mapFull = new google.maps.Map(elFull, Object.assign({}, commonOpts, { zoom: 6 }));
+
+      addHotspotsToMap();
+
+      // Drawing manager
+      drawingManagerFull = new google.maps.drawing.DrawingManager({
+        drawingMode: null,
+        drawingControl: true,
+        drawingControlOptions: {
+          position: google.maps.ControlPosition.TOP_CENTER,
+          drawingModes: ['polygon', 'rectangle']
+        },
+        polygonOptions: {
+          fillColor: '#E8F5FF',
+          fillOpacity: 0.25,
+          strokeWeight: 2,
+          clickable: true,
+          editable: true,
+        },
+        rectangleOptions: {
+          fillColor: '#FFFBCC',
+          fillOpacity: 0.25,
+          strokeWeight: 2,
+          clickable: true,
+          editable: true,
+        }
+      });
+      drawingManagerFull.setMap(mapFull);
+
+      google.maps.event.addListener(drawingManagerFull, 'overlaycomplete', (evt) => {
+        handleOverlayComplete(evt);
+      });
+
+      // controls
+      document.getElementById('modeToggleFull').addEventListener('click', () => {
+        if (heatmapFull) heatmapFull.setMap(heatmapFull.getMap() ? null : mapFull);
+      });
+      document.getElementById('refreshBtnFull').addEventListener('click', () => {
+        // simulate weight change and refresh
+        for (const h of sampleHotspots) { const f = 0.95 + Math.random()*0.1; h.weight = Math.max(1, Math.round(h.weight * f)); }
+        addHotspotsToMap();
+      });
+
+      // restore geofences
+      restoreGeofences();
+
+      // fit to bounds
+      try { mapFull.fitBounds(buildNEBounds()); } catch(e) {}
+
+      // handle window resize to re-render map
+      window.addEventListener('resize', () => { google.maps.event.trigger(mapFull, 'resize'); });
+    };
+
+    // friendly dev message if google not loaded
+    window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        if (typeof google === 'undefined' || !google.maps) {
+          console.warn('Google Maps API not loaded. Add the Maps script with your API key: https://maps.googleapis.com/maps/api/js?key=YOUR_KEY&libraries=drawing,visualization,geometry&callback=initMaps');
+        }
+      }, 1500);
+    });
+
+  })();
+  </script>
+
+  <!-- Google Maps JS (Drawing, Visualization, Geometry) - REPLACE API KEY below -->
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHtdAu9saO175T9gzAifPHpxYXwr8w3G8
+&libraries=drawing,visualization,geometry&callback=initMaps"
+    async defer></script>
+
+</body>
+</html>
