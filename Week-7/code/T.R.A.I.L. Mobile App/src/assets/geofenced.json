@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Chennai Restricted Zone A",
+    "active": true,
+    "path": [
+      { "lat": 12.83910, "lng": 80.15310 },
+      { "lat": 12.83910, "lng": 80.15410 },
+      { "lat": 12.83810, "lng": 80.15410 },
+      { "lat": 12.83810, "lng": 80.15310 }
+    ]
+  },
+  {
+    "name": "Chennai Restricted Zone B",
+    "active": true,
+    "path": [
+      { "lat": 12.83890, "lng": 80.15435 },
+      { "lat": 12.83890, "lng": 80.15535 },
+      { "lat": 12.83790, "lng": 80.15535 },
+      { "lat": 12.83790, "lng": 80.15435 }
+    ]
+  },
+  {
+    "name": "Chennai Restricted Zone C",
+    "active": true,
+    "path": [
+      { "lat": 12.83910, "lng": 80.15560 },
+      { "lat": 12.83910, "lng": 80.15660 },
+      { "lat": 12.83810, "lng": 80.15660 },
+      { "lat": 12.83810, "lng": 80.15560 }
+    ]
+  },
+  {
+    "name": "Chennai Restricted Zone D",
+    "active": true,
+    "path": [
+      { "lat": 12.83895, "lng": 80.15685 },
+      { "lat": 12.83895, "lng": 80.15785 },
+      { "lat": 12.83795, "lng": 80.15785 },
+      { "lat": 12.83795, "lng": 80.15685 }
+    ]
+  }
+]

@@ -1,0 +1,25 @@
+{
+    "ok": "ಸರಿ",
+    "missing_fields": "ಮಾಹಿತಿ ಅಪೂರ್ಣವಾಗಿದೆ",
+    "email_exists": "ಇಮೇಲ್ ಈಗಾಗಲೇ ನೋಂದಾಯಿಸಲಾಗಿದೆ",
+    "signup_error": "ಸೈನ್ ಅಪ್ ದೋಷ",
+    "missing_credentials": "ಅಗತ್ಯ ಮಾಹಿತಿ ಲಭ್ಯವಿಲ್ಲ",
+    "invalid_credentials": "ಇಮೇಲ್ ಅಥವಾ ಪಾಸ್‌ವರ್ಡ್ ತಪ್ಪಾಗಿದೆ",
+    "login_error": "ಲಾಗಿನ್ ದೋಷ",
+    "missing_or_malformed_token": "ಟೋಕನ್ ಇಲ್ಲ ಅಥವಾ ತಪ್ಪಾಗಿದೆ",
+    "invalid_token": "ಅಮಾನ್ಯ ಟೋಕನ್",
+    "profile_fetch_failed": "ಪ್ರೊಫೈಲ್ ಪಡೆಯಲು ವಿಫಲವಾಗಿದೆ",
+    "unsupported_language": "ಭಾಷೆಗೆ ಬೆಂಬಲ ಇಲ್ಲ",
+    "profile_update_failed": "ಪ್ರೊಫೈಲ್ ನವೀಕರಣ ವಿಫಲವಾಗಿದೆ",
+    "family_create_failed": "ಕುಟುಂಬವನ್ನು ರಚಿಸಲು ವಿಫಲವಾಗಿದೆ",
+    "family_not_found": "ಕುಟುಂಬ ಸಿಗಲಿಲ್ಲ",
+    "family_join_failed": "ಕುಟುಂಬಕ್ಕೆ ಸೇರುವಲ್ಲಿ ವಿಫಲವಾಗಿದೆ",
+    "not_family_member": "ನಿಷೇಧ: ನೀವು ಈ ಕುಟುಂಬದ ಸದಸ್ಯರಲ್ಲ.",
+    "family_members_failed": "ಕುಟುಂಬ ಸದಸ್ಯರನ್ನು ಪಡೆಯಲು ವಿಫಲವಾಗಿದೆ",
+    "not_in_family": "ನೀವು ಯಾವುದೇ ಕುಟುಂಬದಲ್ಲಿಲ್ಲ.",
+    "owner_must_transfer": "ಹೊರಡುವ ಮೊದಲು ಹೊಸ ಮಾಲೀಕರನ್ನು ನೇಮಕ ಮಾಡಿ.",
+    "left_family": "ನೀವು ಕುಟುಂಬವನ್ನು ಬಿಟ್ಟಿದ್ದೀರಿ.",
+    "family_leave_failed": "ಕುಟುಂಬವನ್ನು ಬಿಡುವುದು ವಿಫಲವಾಗಿದೆ",
+    "welcome_user": "ಸುಸ್ವಾಗತ, {{name}}!"
+  }
+  

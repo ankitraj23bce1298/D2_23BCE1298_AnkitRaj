@@ -1,0 +1,25 @@
+{
+    "ok": "ଠିକ ଅଛି",
+    "missing_fields": "ତଥ୍ୟ ଅପୂର୍ଣ୍ଣ",
+    "email_exists": "ଇମେଲ୍ ପୂର୍ବରୁ ନିବନ୍ଧିତ ଅଛି",
+    "signup_error": "ସାଇନଅପ୍ ତ୍ରୁଟି",
+    "missing_credentials": "ଆବଶ୍ୟକ ତଥ୍ୟ ନାହିଁ",
+    "invalid_credentials": "ଇମେଲ୍ କିମ୍ବା ପାସୱାର୍ଡ ଭୁଲ",
+    "login_error": "ଲଗଇନ୍ ତୁଟି",
+    "missing_or_malformed_token": "ଟୋକେନ୍ ନାହିଁ କିମ୍ବା ଭୁଲ",
+    "invalid_token": "ଅବୈଧ ଟୋକେନ୍",
+    "profile_fetch_failed": "ପ୍ରୋଫାଇଲ୍ ଆଣିବାରେ ବିଫଳ",
+    "unsupported_language": "ଭାଷା ସମର୍ଥିତ ନୁହେଁ",
+    "profile_update_failed": "ପ୍ରୋଫାଇଲ୍ ଅଦ୍ୟତନ ବିଫଳ",
+    "family_create_failed": "ପରିବାର ସୃଷ୍ଟି ବିଫଳ",
+    "family_not_found": "ପରିବାର ମିଳିଲା ନାହିଁ",
+    "family_join_failed": "ପରିବାରରେ ଯୋଗ ହେବା ବିଫଳ",
+    "not_family_member": "ନିଷିଦ୍ଧ: ଆପଣ ଏହି ପରିବାରର ସଦସ୍ୟ ନୁହାନ୍ତି।",
+    "family_members_failed": "ପରିବାର ସଦସ୍ୟ ଆଣିବାରେ ବିଫଳ",
+    "not_in_family": "ଆପଣ କୌଣସି ପରିବାରରେ ନାହାନ୍ତି।",
+    "owner_must_transfer": "ବାହାରିବା ପୂର୍ବେ ନୂତନ ମାଲିକଙ୍କୁ ନିଯୁକ୍ତ କରନ୍ତୁ।",
+    "left_family": "ଆପଣ ପରିବାର ଛାଡ଼ିଛନ୍ତି।",
+    "family_leave_failed": "ପରିବାର ଛାଡ଼ିବା ବିଫଳ",
+    "welcome_user": "ସ୍ୱାଗତ, {{name}}!"
+  }
+  

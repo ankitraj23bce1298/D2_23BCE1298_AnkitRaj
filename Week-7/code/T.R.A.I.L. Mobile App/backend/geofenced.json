@@ -1,0 +1,23 @@
+[
+    {
+      "name": "Example Restricted Zone A",
+      "active": true,
+      "path": [
+        { "lat": 28.6100, "lng": 77.2000 },
+        { "lat": 28.6120, "lng": 77.2100 },
+        { "lat": 28.6040, "lng": 77.2150 },
+        { "lat": 28.6030, "lng": 77.2050 }
+      ]
+    },
+    {
+      "name": "Example Restricted Zone B",
+      "active": true,
+      "path": [
+        { "lat": 19.0740, "lng": 72.8770 },
+        { "lat": 19.0780, "lng": 72.8800 },
+        { "lat": 19.0760, "lng": 72.8850 },
+        { "lat": 19.0720, "lng": 72.8820 }
+      ]
+    }
+  ]
+  
